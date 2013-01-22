@@ -82,9 +82,11 @@ public class TitaniumBarcodeModule extends KrollModule {
 		logDebug("scan() ended");
 	}
 
-	private KrollDict getDictForResult(final String result) {
+	private KrollDict getDictForResult(final String result, final String format, final String type) {
 		final KrollDict dict = new KrollDict();
 		dict.put("barcode", result);
+		dict.put("format", format);
+		dict.put("type", type);
 		return dict;
 	}
 
@@ -142,8 +144,12 @@ public class TitaniumBarcodeModule extends KrollModule {
 				logDebug("scan successful");
 				String result = data
 						.getStringExtra(TitaniumBarcodeActivity.EXTRA_RESULT);
+				String resultFormat = data
+						.getStringExtra(TitaniumBarcodeActivity.EXTRA_RESULT_FORMAT);
+				String resultType = data
+						.getStringExtra(TitaniumBarcodeActivity.EXTRA_RESULT_TYPE);
 				logDebug("scan result: " + result);
-				successCallback.callAsync((KrollObject)successCallback,getDictForResult(result));
+				successCallback.callAsync((KrollObject)successCallback,getDictForResult(result, resultFormat, resultType));
 			}
 		}
 	}

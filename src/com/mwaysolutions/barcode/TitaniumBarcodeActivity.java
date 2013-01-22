@@ -65,6 +65,8 @@ public final class TitaniumBarcodeActivity extends Activity implements
 		SurfaceHolder.Callback {
 
 	public static final String EXTRA_RESULT = "scanResult";
+	public static final String EXTRA_RESULT_FORMAT = "scanResultFormat";
+	public static final String EXTRA_RESULT_TYPE = "scanResultType";
 
 	private static final String TAG = "CaptureActivity";
 	private static final Pattern COMMA_PATTERN = Pattern.compile(",");
@@ -343,12 +345,14 @@ public final class TitaniumBarcodeActivity extends Activity implements
 		ResultHandler resultHandler = new ResultHandler(rawResult);
 		CharSequence displayContents = resultHandler.getDisplayContents();
 		Log.i(TAG, "Got return value: " + displayContents.toString());
-		fireSucessCallback(displayContents.toString());
+		fireSucessCallback(displayContents.toString(), rawResult.getBarcodeFormat().toString(), resultHandler.getType().toString());
 	}
 
-	private void fireSucessCallback(String scanResult) {
+	private void fireSucessCallback(String scanResult, String scanFormat, String scanType) {
 		Intent intent = new Intent();
 		intent.putExtra(EXTRA_RESULT, scanResult);
+		intent.putExtra(EXTRA_RESULT_FORMAT, scanFormat);
+		intent.putExtra(EXTRA_RESULT_TYPE, scanType);
 		setResult(Activity.RESULT_OK, intent);
 		Log.i(TAG, "Set result, finish()");
 		finish();
