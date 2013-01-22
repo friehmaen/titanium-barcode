@@ -3,4 +3,8 @@ bin
 build
 dist
 *.zip
+*.swp
+*.bak
+*~
+libs
 .apt_generated
